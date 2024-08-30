@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 sg.theme('NeonBlue1')
-
+#aaa
 def calculo():
     erro=''
     aa=''
