@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+import os
 sg.theme('NeonBlue1')
 #aaa
 def calculo():
@@ -148,6 +149,7 @@ def cadastro():
 
     window = sg.Window('Faça seu cadastro, Professor(a)', layout)
     erro=''
+    lista=[]
     while True:
         event, values = window.read()
         
@@ -163,45 +165,55 @@ def cadastro():
             
             if nome == "" or values['Email'] == "" or values['CPF']  == "" or values['senha'] == "" or values['confirmar_senha'] == "":
                 sg.popup('ERRO: CAMPOS VAZIOS!')
+                erro="esta errado"
                 
 
             elif nome.replace(" ","").isalpha()==False:
-                sg.popup('Erro,um nome não contem numeros ou simbolos')
+                sg.popup('Erro,digite um nome válido.')
                 window['nome_professor'].update('')
+                erro='esta errado'
             
             elif len(nome) <6  or len(values['Email'])<6:
-                sg.popup('Erro: nome ou Email iválido, pois tem menos de 6 caracteres')
+                sg.popup('Erro: nome ou Email inválido, pois tem menos de 6 caracteres.')
+                erro='esta errado'
 
                 
             elif not len(values['CPF'])==11 and values['CPF'].replace(".","").replace("-","") and values['CPF'].isdigit():
                 erro='esta errado'
-                sg.popup('Erro, digite um CPF válido')
+                sg.popup('Erro, digite um CPF válido.')
                 window['CPF'].update('')
 
 
             elif values['senha'] != values['confirmar_senha']:
-                sg.popup('Erro: As senhas não coincidem!')
+                sg.popup('Erro, as senhas não coincidem.')
                 window['senha'].update('')
                 window['confirmar_senha'].update('')
+                erro='esta errado'
 
             elif len(values['senha']) <6 or len(values['confirmar_senha']) <6 :
                 sg.popup('Erro,senha tem que ter 6 ou mais caracteres')
+                erro='esta errado'
 
             
                 
                 
             else:
+                if erro=='':
+                    with open('dados_login.txt','a') as file:
+                        file.write(f"{values['CPF']},{values['senha']}\n")
+
                 dado_coletado = values['nome_professor']
                 sg.popup(f'Você fez seu cadastro com sucesso: {dado_coletado}')
                 window.close()
                 login()
+            
 
     window.close()
 
 def login():
     layout = [
-        [sg.Text("Email ou nome de usuário do professor(a)")],
-        [sg.InputText(key='nome_usuario')],
+        [sg.Text("CPF do professor(a)")],
+        [sg.InputText(key='CPF_usuario')],
         [sg.Text('Senha')],
         [sg.InputText(password_char='*', key='senha')],
         [sg.Button('Ok'), sg.Button('Cancelar'),sg.Button('Cadastre-se')]
@@ -210,7 +222,9 @@ def login():
 
     window = sg.Window('Login', layout)
     erro=''
+    
     while True:
+    
         event, values = window.read()
         
 
@@ -219,7 +233,7 @@ def login():
         
 
         if event == 'Ok':
-            nome=values['nome_usuario']
+            nome=values['CPF_usuario']
 
             if nome == "" or values['senha'] == "":
                 sg.popup('ERRO: CAMPOS VAZIOS!')
@@ -227,20 +241,33 @@ def login():
 
             
         
-            elif not  nome.replace(" ", "").isalpha():
-                sg.popup('digite um nome váildo')
-                window['nome_usuario'].update('')               
+            elif not len(values['CPF_usuario'])==11 and values['CPF_usuario'].replace(".","").replace("-","") and values['CPF_usuario'].isdigit()==True:
                 erro='esta errado'
+                sg.popup('Erro, digite um CPF válido.')
+                window['CPF_usuario'].update('')
+            
 
-            elif len(nome) < 3:
-                sg.popup('Digite  3 ou mais caracteres')               
-                erro='esta errado'
             elif len(values['senha']) <6 :
                 sg.popup('Erro,senha tem que ter 6 ou mais caracteres')
+                erro='esta errado'
+
+                
             else :
                 erro=''
-                window.close()
-                calculo()
+                if os.path.exists('dados_login.txt'):
+                    with open('dados_login.txt','r') as file:
+                        for line in file:
+                            professor,senha_arquivo=line.strip().split(',')
+                            if professor == values['CPF_usuario'] and senha_arquivo==values['senha']:
+                                window.close()
+                                calculo()    
+                                break
+                                                    
+                else:
+                    sg.popup('Não existe um cadastro')
+                
+               
+              
                 
                 
 
