@@ -89,7 +89,6 @@ def calculo():
                         window['nota2'].update(f'')
 
 
-
                         
                     else:
                         sg.popup('Erro, apenas numeros menores que 10 são permitidos.')
@@ -175,11 +174,16 @@ def cadastro():
                 sg.popup('Erro: nome ou Email iválido, pois tem menos de 6 caracteres')
 
                 
-            elif not len(values['CPF_prof'])==11 and values['CPF_prof'].replace(".","").replace("-","") and values['CPF_prof'].isdigit():
+            elif   CPF.replace(" ", "").replace("-","").isdigit():
+                sg.popup('digite um CPF válido')
+                window['CPF_prof'].update('')               
                 erro='esta errado'
-                sg.popup('Erro, digite um CPF válido')
-                window['CPF_prof'].update('')
 
+            elif len(CPF) != 11:
+                sg.popup('Digite Um CPF  válido')               
+                erro='esta errado'
+                window['CPF_prof'].update('')
+                        
 
             elif values['senha'] != values['confirmar_senha']:
                 sg.popup('Erro: As senhas não coincidem!')
@@ -194,7 +198,7 @@ def cadastro():
                 
             else:                 
                 dado_coletado = values['nome_professor']
-                with open('dados_coletados_login.txt', "a") as file:
+                with open('dados_login.txt', 'a') as file:
                     file.write(f'{values['CPF_prof']},{values['senha']}\n')
                 sg.popup(f'Você fez seu cadastro com sucesso: {dado_coletado}')
                 window.close()
@@ -232,31 +236,36 @@ def login():
 
             
         
-            elif not  CPF.replace(" ", "").isalpha():
-                sg.popup('digite um nome váildo')
+            elif not  CPF.replace(" ", "").replace("-","").isdigit():
+                sg.popup('digite um CPF válido')
                 window['CPF_prof'].update('')               
                 erro='esta errado'
 
-            elif len(CPF) < 3:
-                sg.popup('Digite  3 ou mais caracteres')               
+            elif len(CPF) != 11:
+                sg.popup('Digite Um CPF  válido')               
                 erro='esta errado'
+                window['CPF_prof'].update('')
+                        
             elif len(values['senha']) <6 :
                 sg.popup('Erro,senha tem que ter 6 ou mais caracteres')
             else :
                 erro=''
-                if os.path.exists('dados_login', 'txt') :
+                if os.path.exists('dados_login.txt') :
                     with open('dados_login.txt', 'r') as file:
                         for line in file:
                             CPF_f,senha_arquivo = line.strip().split(',')
-                    window.close()
-                    calculo()
-                    break
+                    if senha_arquivo==values['senha'] and CPF_f==values['CPF_prof']:
+                        window.close()
+                        calculo()
+                        break
+                    else:
+                        sg.popup('login não encontrado')
+                        window['CPF_prof'].update('')
+                        window['senha'].update('')
                 else:
                     sg.popup('login não encontrado')
-                    
-                
-                
-                
+                    window['CPF_prof'].update('')
+                    window['senha'].update('')
                 
 
 
@@ -266,5 +275,5 @@ def login():
        
 
     window.close()
-
+print('A')
 login()
