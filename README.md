@@ -1,2 +1,0 @@
-# trablgonovotec
-python

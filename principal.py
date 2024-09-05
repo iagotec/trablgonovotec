@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 sg.theme('NeonBlue1')
-#aaa
+
 def calculo():
     erro=''
     aa=''
@@ -37,20 +37,20 @@ def calculo():
             n2 = values['nota2']
             nome = values['nome_usuario']
             if nome=='' or n1=='' or n2=='':
-                sg.popup('Preencha todos os campos ')
+                sg.popup('Preencha todos os campos. ')
                 erro='esta errado'
 
             elif not nome.replace(" ","").isalpha():
-                sg.popup('digite um nome váildo')
+                sg.popup('digite um nome váildo.')
                 window['nome_usuario'].update('')
                 erro='esta errado'
             elif len(nome) < 6:
-                sg.popup('Digite  6 ou mais caracteres')
+                sg.popup('Digite  6 ou mais caracteres.')
                 window['nome_usuario'].update('')
                 erro='esta errado'
 
             elif not n1.replace(".", "").isdigit() or not n2.replace(".", "").isdigit():
-                sg.popup('ERRO: APENAS NÚMEROS SÃO PERMITIDOS!')
+                sg.popup('Erro,apenas numeros são permitidos.')
                 window['nota1'].update('')
                 window['nota2'].update('')
                 erro='esta errado'
@@ -82,7 +82,7 @@ def calculo():
                             situação=""
 
                         
-                        sg.popup(f'A média final é de: {media}')
+                        sg.popup('resultado guardado.Para ver clique em: finalizar')
                         window['nome_usuario'].update(f'')
                         window['nota1'].update(f'')
                         window['nota2'].update(f'')
@@ -91,14 +91,14 @@ def calculo():
 
                         
                     else:
-                        sg.popup('ERRO: APENAS NÚMEROS MENORES QUE 10 SÃO PERMITIDOS!')
+                        sg.popup('Erro, apenas numeros menores que 10 são permitidos.')
                         window['nota1'].update('')
                         window['nota2'].update('')
                         erro='esta errado'
 
 
                 except ValueError:
-                    sg.popup('ERRO: NÚMEROS INVÁLIDOS!')               
+                    sg.popup('Erro,numeros invalidos.')               
                     window['nome_usuario'].update('')
                     window['nota1'].update('')
                     window['nota2'].update('')           
