@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+import os
 sg.theme('NeonBlue1')
 
 def calculo():
@@ -137,7 +138,7 @@ def cadastro():
         [sg.Text("Email")],
         [sg.InputText(key='Email')],
         [sg.Text('CPF')],
-        [sg.InputText(key='CPF')],
+        [sg.InputText(key='CPF_prof')],
         [sg.Text('Senha')],
         [sg.InputText(password_char='*', key='senha')],
         [sg.Text('Confirmar senha')],
@@ -160,8 +161,9 @@ def cadastro():
 
         if event == 'Confirmar':
             nome=values['nome_professor']
+            CPF=values['CPF_prof']
             
-            if nome == "" or values['Email'] == "" or values['CPF']  == "" or values['senha'] == "" or values['confirmar_senha'] == "":
+            if nome == "" or values['Email'] == "" or values['CPF_prof']  == "" or values['senha'] == "" or values['confirmar_senha'] == "":
                 sg.popup('ERRO: CAMPOS VAZIOS!')
                 
 
@@ -173,10 +175,10 @@ def cadastro():
                 sg.popup('Erro: nome ou Email iválido, pois tem menos de 6 caracteres')
 
                 
-            elif not len(values['CPF'])==11 and values['CPF'].replace(".","").replace("-","") and values['CPF'].isdigit():
+            elif not len(values['CPF_prof'])==11 and values['CPF_prof'].replace(".","").replace("-","") and values['CPF_prof'].isdigit():
                 erro='esta errado'
                 sg.popup('Erro, digite um CPF válido')
-                window['CPF'].update('')
+                window['CPF_prof'].update('')
 
 
             elif values['senha'] != values['confirmar_senha']:
@@ -190,8 +192,10 @@ def cadastro():
             
                 
                 
-            else:
+            else:                 
                 dado_coletado = values['nome_professor']
+                with open('dados_coletados_login.txt', "a") as file:
+                    file.write(f'{values['CPF_prof']},{values['senha']}\n')
                 sg.popup(f'Você fez seu cadastro com sucesso: {dado_coletado}')
                 window.close()
                 login()
@@ -200,8 +204,8 @@ def cadastro():
 
 def login():
     layout = [
-        [sg.Text("Email ou nome de usuário do professor(a)")],
-        [sg.InputText(key='nome_usuario')],
+        [sg.Text("CPF do professor(a)")],
+        [sg.InputText(key='CPF_prof')],
         [sg.Text('Senha')],
         [sg.InputText(password_char='*', key='senha')],
         [sg.Button('Ok'), sg.Button('Cancelar'),sg.Button('Cadastre-se')]
@@ -219,28 +223,39 @@ def login():
         
 
         if event == 'Ok':
-            nome=values['nome_usuario']
+            
+            CPF=values['CPF_prof']
 
-            if nome == "" or values['senha'] == "":
+            if CPF == "" or values['senha'] == "":
                 sg.popup('ERRO: CAMPOS VAZIOS!')
                 erro='esta errado'
 
             
         
-            elif not  nome.replace(" ", "").isalpha():
+            elif not  CPF.replace(" ", "").isalpha():
                 sg.popup('digite um nome váildo')
-                window['nome_usuario'].update('')               
+                window['CPF_prof'].update('')               
                 erro='esta errado'
 
-            elif len(nome) < 3:
+            elif len(CPF) < 3:
                 sg.popup('Digite  3 ou mais caracteres')               
                 erro='esta errado'
             elif len(values['senha']) <6 :
                 sg.popup('Erro,senha tem que ter 6 ou mais caracteres')
             else :
                 erro=''
-                window.close()
-                calculo()
+                if os.path.exists('dados_login', 'txt') :
+                    with open('dados_login.txt', 'r') as file:
+                        for line in file:
+                            CPF_f,senha_arquivo = line.strip().split(',')
+                    window.close()
+                    calculo()
+                    break
+                else:
+                    sg.popup('login não encontrado')
+                    
+                
+                
                 
                 
 
