@@ -265,7 +265,8 @@ def login():
                                                     
                 else:
                     sg.popup('Não existe um cadastro')
-                
+                    window['CPF_usuario'].update('')
+                    window['senha'].update('')
                
               
                 
