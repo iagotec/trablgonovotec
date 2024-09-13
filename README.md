@@ -10,4 +10,4 @@ Feito em Python.
 ##Segue abaixo a pré-visualização:
 
 
-<img src="" alt="" style="width:1150px;">
+<img src="principaltec.png" alt="principaltec.png" style="width:1150px;">
