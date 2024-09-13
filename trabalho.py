@@ -42,16 +42,16 @@ def calculo():
                 erro='esta errado'
 
             elif not nome.replace(" ","").isalpha():
-                sg.popup('digite um nome váildo.')
+                sg.popup('Erro: Digite um nome váildo.')
                 window['nome_usuario'].update('')
                 erro='esta errado'
             elif len(nome) < 6:
-                sg.popup('Digite  6 ou mais caracteres.')
+                sg.popup('Erro: Digite  um nome válido.')
                 window['nome_usuario'].update('')
                 erro='esta errado'
 
             elif not n1.replace(".", "").isdigit() or not n2.replace(".", "").isdigit():
-                sg.popup('Erro,apenas numeros são permitidos.')
+                sg.popup('Erro: Apenas numeros são permitidos.')
                 window['nota1'].update('')
                 window['nota2'].update('')
                 erro='esta errado'
@@ -91,14 +91,14 @@ def calculo():
 
                         
                     else:
-                        sg.popup('Erro, apenas numeros menores que 10 são permitidos.')
+                        sg.popup('Erro: Apenas numeros menores que 10 são permitidos.')
                         window['nota1'].update('')
                         window['nota2'].update('')
                         erro='esta errado'
 
 
                 except ValueError:
-                    sg.popup('Erro,numeros invalidos.')               
+                    sg.popup('Erro: Numeros invalidos.')               
                     window['nome_usuario'].update('')
                     window['nota1'].update('')
                     window['nota2'].update('')           
@@ -112,7 +112,7 @@ def calculo():
 
         if event=='finalizar':
             if aa =='':
-                sg.popup('Não há alunos cadastrados')
+                sg.popup('Não há alunos cadastrados.')
             else:
                 sg.popup(aa)
 
@@ -167,20 +167,20 @@ def cadastro():
                 
 
             elif nome.replace(" ","").isalpha()==False:
-                sg.popup('Erro,um nome não contem numeros ou simbolos')
+                sg.popup('Erro: Digite um nome válido')
                 window['nome_professor'].update('')
             
             elif len(nome) <6  or len(values['Email'])<6:
-                sg.popup('Erro: nome ou Email iválido, pois tem menos de 6 caracteres')
+                sg.popup('Erro: Nome ou Email iválido, pois tem menos de 6 caracteres')
 
                 
-            elif   CPF.replace(" ", "").replace("-","").isdigit():
-                sg.popup('digite um CPF válido')
+            elif   CPF.replace(" ", "").replace("-","").isalpha():
+                sg.popup('Erro: Digite um CPF válido')
                 window['CPF_prof'].update('')               
                 erro='esta errado'
 
             elif len(CPF) != 11:
-                sg.popup('Digite Um CPF  válido')               
+                sg.popup('Erro: Digite Um CPF  válido')               
                 erro='esta errado'
                 window['CPF_prof'].update('')
                         
@@ -191,7 +191,7 @@ def cadastro():
                 window['confirmar_senha'].update('')
 
             elif len(values['senha']) <6 or len(values['confirmar_senha']) <6 :
-                sg.popup('Erro,senha tem que ter 6 ou mais caracteres')
+                sg.popup('Erro: senha tem que ter 6 ou mais caracteres')
 
             
                 
