@@ -38,7 +38,7 @@ def calculo():
             n2 = values['nota2']
             nome = values['nome_usuario']
             if nome=='' or n1=='' or n2=='':
-                sg.popup('Preencha todos os campos. ')
+                sg.popup('Erro: Preencha todos os campos. ')
                 erro='esta errado'
 
             elif not nome.replace(" ","").isalpha():
@@ -112,7 +112,7 @@ def calculo():
 
         if event=='finalizar':
             if aa =='':
-                sg.popup('Não há alunos cadastrados.')
+                sg.popup('Erro: Não há alunos cadastrados.')
             else:
                 sg.popup(aa)
 
@@ -171,7 +171,7 @@ def cadastro():
                 window['nome_professor'].update('')
             
             elif len(nome) <6  or len(values['Email'])<6:
-                sg.popup('Erro: Nome ou Email iválido, pois tem menos de 6 caracteres')
+                sg.popup('Erro: Nome ou Email inválidos, pois tem menos de 6 caracteres')
 
                 
             elif   CPF.replace(" ", "").replace("-","").isalpha():
@@ -237,17 +237,17 @@ def login():
             
         
             elif not  CPF.replace(" ", "").replace("-","").isdigit():
-                sg.popup('digite um CPF válido')
+                sg.popup('Erro: Digite um CPF válido')
                 window['CPF_prof'].update('')               
                 erro='esta errado'
 
             elif len(CPF) != 11:
-                sg.popup('Digite Um CPF  válido')               
+                sg.popup('Erro: Digite Um CPF  válido')               
                 erro='esta errado'
                 window['CPF_prof'].update('')
                         
             elif len(values['senha']) <6 :
-                sg.popup('Erro,senha tem que ter 6 ou mais caracteres')
+                sg.popup('Erro: Senha tem que ter 6 ou mais caracteres')
             else :
                 erro=''
                 if os.path.exists('dados_login.txt') :
@@ -259,11 +259,11 @@ def login():
                         calculo()
                         break
                     else:
-                        sg.popup('login não encontrado')
+                        sg.popup('Erro: Login não encontrado')
                         window['CPF_prof'].update('')
                         window['senha'].update('')
                 else:
-                    sg.popup('login não encontrado')
+                    sg.popup('Erro: Login não encontrado')
                     window['CPF_prof'].update('')
                     window['senha'].update('')
                 
