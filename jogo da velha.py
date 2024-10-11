@@ -47,6 +47,8 @@ matriz_invisível = [0]*9
 #colocar os 9 botões na matriz
 layout=[]
 cont = 0
+layout.append([sg.Push(),sg.Text("Jogo da Velha ", key="vez_jgdr"),sg.Push()])
+
 layout.append([sg.Text(" ", key="vez_jgdr")])
 for b in range(3):
     linha=[]
