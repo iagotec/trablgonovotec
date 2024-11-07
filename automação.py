@@ -27,7 +27,7 @@ pa.sleep(1)
 
 #cadastro
 pa.click(x=958, y=620)
-pa.sleep(2)
+pa.sleep(3)
 
 #nome
 pa.click(x=961, y=451)
@@ -55,7 +55,11 @@ pa.hotkey('ctrl', 'v')
 pa.click(x=883, y=652)
 pyperclip.copy('123456')
 pa.hotkey('ctrl', 'v')
-pa.sleep(1)
+pa.sleep(2)
+
+pa.click(x=834, y=676)
+
+
 
 
 
