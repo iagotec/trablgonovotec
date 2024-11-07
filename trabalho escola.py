@@ -74,7 +74,7 @@ def calculo():
                             aproveitamento = 'D'
                         elif 7 <= media <= 7.9:
                             aproveitamento = 'C '
-                        elif 8 <= media <= 8.9:
+                        elif 8 <= media <= 8.9:;
                             aproveitamento = 'B '
                         elif 9 <= media <= 10:
                             aproveitamento = 'A '
